@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.cuizilin.blog.dao.BlogMapper">
+    <select id="getBlogList" resultType="Blog">
+        select * from t_blog
+    </select>
+
+    <select id="getBlogById" resultType="Blog">
+        select * from t_blog where id = #{id}
+    </select>
+
+    <select id="getBlogListByIdAndTitle" resultType="Blog">
+        select * from t_blog
+        <where>
+            <if test="title != null">
+                and title like '%${title}%'
+            </if>
+            <if test="typeId != null">
+                and type_id = #{typeId}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="getBlogListByTypeId" resultType="Blog">
+        select * from t_blog where type_id = #{id}
+    </select>
+
+    <select id="getBlogListByTitle" resultType="Blog">
+        select * from t_blog where title like '%${title}%'
+    </select>
+
+    <insert id="addBlog" parameterType="Blog">
+        insert into t_blog(title, content, photo, update_time,
+            description, user_id, type_id, views, appreciations,
+            is_published, is_recommended) values(#{title}, #{content},
+            #{photo}, #{updateTime}, #{description}, #{userId}, #{typeId},
+            #{views}, #{appreciations}, #{isPublished}, #{isRecommended})
+    </insert>
+
+
+    <!--update Blog-->
+    <update id="updateBlog" parameterType="Blog">
+        update t_blog set title = #{title}, content = #{content}, photo = #{photo},
+            update_time = #{updateTime}, description = #{description}, type_id = #{typeId}, is_published = #{isPublished}
+            where id = #{id}
+    </update>
+
+
+    <!--views ++-->
+    <update id="addView" parameterType="top.cuizilin.blog.vo.BlogView">
+        update t_blog set views = #{views} where id = #{blogId}
+    </update>
+
+    <!--appreciations++-->
+    <update id="addAppreciation" parameterType="top.cuizilin.blog.vo.BlogAppreciations">
+        update t_blog set appreciations = #{appreciations} where id = #{blogId}
+    </update>
+
+    <!--set Recommended true-->
+    <update id="setRecommended">
+        update t_blog set is_recommended = #{flag} where id = #{id}
+    </update>
+
+
+    <!--delete blog-->
+    <delete id="deleteBlog">
+        delete from t_blog where id = #{id}
+    </delete>
+
+</mapper>

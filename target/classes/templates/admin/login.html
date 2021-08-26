@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <link href="../../static/css/mycss.css" th:href="@{/css/mycss.css}"rel="stylesheet">
+</head>
+<body>
+<div class="ui container m-margin-top-huge">
+    <div class="ui two column centered grid">
+        <div class="column">
+            <div class="ui segment m-shadow m-opacity-large">
+                <h2 class="ui teal header center aligned">
+                    <div class="content center aligned">
+                        登录到账号
+                    </div>
+                </h2>
+                <form class="ui large form" method="post" action="/admin/login">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="username" placeholder="用户名">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="password" placeholder="密码">
+                        </div>
+                    </div>
+                    <button class="ui fluid large teal submit button" type="submit">登录</button>
+                    <div class="ui negative message" th:text="${message}" th:if="${!#strings.isEmpty(message)}"></div>
+                    <div class="ui error message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script type="text/javascript">
+    $('.ui.form').form({
+        fields : {
+            username : {
+                identifier : 'username',
+                rules : [{
+                    type : 'empty',
+                    prompt : '请输入用户名'
+                }]
+            },
+
+            password : {
+                identifier : 'password',
+                rules : [{
+                    type : 'empty',
+                    prompt : '请输入密码'
+                }]
+            },
+
+        }
+    })
+</script>
+
+</body>
+</html>
