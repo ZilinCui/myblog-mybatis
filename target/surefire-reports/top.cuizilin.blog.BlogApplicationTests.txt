@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: top.cuizilin.blog.BlogApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.436 s - in top.cuizilin.blog.BlogApplicationTests
