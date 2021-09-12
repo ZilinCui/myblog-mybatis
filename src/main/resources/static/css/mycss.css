@@ -65,6 +65,14 @@ html,body{overflow:hidden;overflow-y:auto;}
     margin-bottom: 0.5em !important;
 }
 
+.m-margin-bottom-none{
+    margin-bottom: 0 !important;
+}
+
+.m-margin-top-medium {
+    margin-top:0.8em !important;
+}
+
 
 
 /*------------padding------------*/

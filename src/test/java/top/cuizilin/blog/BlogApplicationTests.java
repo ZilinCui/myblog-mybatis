@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import top.cuizilin.blog.dao.BlogMapper;
 import top.cuizilin.blog.dao.CommentMapper;
+import top.cuizilin.blog.dao.InformationMapper;
 import top.cuizilin.blog.dao.TypeMapper;
 import top.cuizilin.blog.pojo.Blog;
 import top.cuizilin.blog.pojo.Comment;
@@ -26,6 +27,15 @@ class BlogApplicationTests {
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private InformationMapper informationMapper;
+
+
+    @Test
+    public void test3(){
+        System.out.println(informationMapper.getBlogCount());
+    }
 
     @Test
     public void test(){

@@ -31,11 +31,12 @@
         </div>
       </div>
       <div class="ui five wide column">
-        <h4 class="ui black center aligned teal header">关于我</h4>
-        <div class="ui link list">
-          <a href="#" class="item"><h5 class="ui center grey aligned header">后端前端结合</h5></a>
-          <a href="#" class="item"><h5 class="ui center grey aligned header">全栈才能生存</h5></a>
-          <a href="#" class="item"><h5 class="ui center grey aligned header">否则迟早淘汰</h5></a>
+        <div id="information-container">
+          <div class="ui link list" th:fragment="informationList" th:each="information : ${informationList}">
+            <a href="#" class="item m-margin-horizon-small"><h3 class="ui center m-white m-opacity-large aligned header m-margin-top-small">访问总数: <span class="m-orange" th:text="${information.allViews}">2</span></h3></a>
+            <a href="#" class="item"><h3 class="ui center m-white m-opacity-large aligned header">点赞总数: <span class="m-orange" th:text="${information.allLoves}">3</span></h3></a>
+            <a href="#" class="item"><h3 class="ui center m-white m-opacity-large aligned header">文章总数: <span class="m-orange" th:text="${information.allBlogs}">1</span></h3></a>
+          </div>
         </div>
       </div>
 
@@ -44,7 +45,8 @@
     <div class="ui inverted divider"></div>
     <div class="ui two column centered grid">
       <div class="column">
-        <h4 class="ui center blue aligned header">鲁ICP备2021029905号</h4>
+        <h5 class="ui center aligned header m-white m-opacity m-margin-bottom-none"><span id="timeDate"class="m-white m-opacity-big"></span><span id="times" class="m-orange"></span></h5>
+        <h5 class="ui center blue aligned header m-margin-top-medium">鲁ICP备2021029905号</h5>
         <p class="ui center orange aligned header m-text-thin">Copyright © Localczl & 2021 - 2022 All Rights Reserved.</p>
       </div>
     </div>
@@ -54,6 +56,9 @@
 <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
 <script type="text/javascript">
   $('#newBlog-container').load("/footer/newBlog");
+  $('#information-container').load("/footer/informationList")
+
+
 </script>
 </body>
 </html>

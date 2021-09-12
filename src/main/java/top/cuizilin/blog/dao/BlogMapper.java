@@ -36,4 +36,7 @@ public interface BlogMapper {
 
     //根据title模糊查询
     List<Blog> getBlogListByTitle(String title);
+
+    //根据日期将blog排序
+    List<Blog> getBlogListOrderByTime();
 }

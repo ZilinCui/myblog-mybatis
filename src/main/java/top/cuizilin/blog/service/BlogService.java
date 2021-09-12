@@ -105,4 +105,14 @@ public class BlogService {
         }
         return blogList;
     }
+
+    //根据时间进行倒序排序
+    public List<Blog> getBlogListOrderByTime(){
+        List<Blog> blogList = blogMapper.getBlogListOrderByTime();
+        for(Blog blog : blogList){
+            blog.setType(typeMapper.getTypeById(blog.getTypeId()));
+            blog.setUser(userMapper.getUserById(blog.getUserId()));
+        }
+        return blogList;
+    }
 }

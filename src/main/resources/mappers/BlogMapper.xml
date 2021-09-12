@@ -32,6 +32,10 @@
         select * from t_blog where title like '%${title}%'
     </select>
 
+    <select id="getBlogListOrderByTime" resultType="Blog">
+        select * from t_blog order by update_time desc
+    </select>
+
     <insert id="addBlog" parameterType="Blog">
         insert into t_blog(title, content, photo, update_time,
             description, user_id, type_id, views, appreciations,

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.cuizilin.blog.dao.InformationMapper">
+    <select id="getBlogCount" resultType="int">
+        select count(*) from t_blog
+    </select>
+
+    <select id="getAllViews" resultType="int">
+        select * from t_allviews
+    </select>
+
+    <select id="getAllLoves" resultType="int">
+        select sum(appreciations) from t_blog
+    </select>
+
+    <update id="addViews">
+        update t_allviews set allViews = #{currentView} where id = 1
+    </update>
+</mapper>
