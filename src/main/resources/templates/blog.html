@@ -46,6 +46,7 @@
                     <i class="dropdown icon"></i>
                     <div class="menu">
                       <a href="#" class="item" th:href="@{/logout}">注销</a>
+                       <a href="#" class="item" th:if="${session.get('user')?.type == 1}" th:href="@{/admin}">发表文章</a>
                     </div>
                   </div>
                 </span>
