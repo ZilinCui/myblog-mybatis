@@ -130,11 +130,11 @@
     <div class="ui middle aligned stackable grid">
       <div class="nine wide column">
         <ui class="list">
-          <li>作者：<span th:text="${blog.user.nickname}">ONESTAR</span><a href="#" target="_blank">（联系作者）</a></li>
+          <li>作者：<span th:text="${blog.user.nickname}"></span></li>
           <li>更新时间：<span th:text="${blog.updateTime}">2020-01-02 09:08</span></li>
           <li>版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）</li>
           <li>转载声明：如果是转载栈主转载的文章，请附上原文链接</li>
-          <li class="m-mobile-hide">添加作者好友：请在文末添加作者微信二维码（微信二维码见右边，欢迎关注）</li>
+          <li class="m-mobile-hide">若想发表文章，请添加管理员好友，微信在右侧</li>
         </ui>
       </div>
       <!--微信公众号-->
@@ -156,7 +156,7 @@
             </a>
             <div class="content" >
               <a class="author" >
-                <span th:text="|游客${comment.nickname}|">Matt</span>
+                <span th:text="${comment.nickname}">Matt</span>
                 <div class="ui mini basic teal left pointing label m-padded-mini">楼主</div>
               </a>
               <div class="metadata">
@@ -178,7 +178,7 @@
                 </a>
                 <div class="content">
                   <a class="author" >
-                    <span th:text="|游客${reply.nickname}|">小红</span>&nbsp;&nbsp;&nbsp;&nbsp;<span th:text="|回复 ${reply.parentNickname}|" class="m-teal">@ 小白</span>
+                    <span th:text="${reply.nickname}">小红</span>&nbsp;&nbsp;&nbsp;&nbsp;<span th:text="|回复 ${reply.parentNickname}|" class="m-teal">@ 小白</span>
                   </a>
                   <div class="metadata">
                     <span class="date" th:text="${reply.updateTime}">Today at 5:42PM</span>
@@ -204,14 +204,15 @@
       <div class="field">
         <textarea name="content" placeholder="请输入评论信息..."></textarea>
       </div>
+      <input type="hidden" name="nickname" th:value="${session.get('user')?.nickname}">
       <div class="fields">
         <div class="field m-mobile-wide m-margin-bottom-small">
           <div class="ui left icon input">
-            <i class="user icon"></i>
-            <input type="text" name="nickname" placeholder="昵称">
+            <i class="mail icon"></i>
+            <input type="text" placeholder="邮箱（可选填便于回复）">
           </div>
         </div>
-        <div class="field  m-margin-bottom-small m-mobile-wide">
+        <div class="field m-margin-bottom-small m-mobile-wide">
           <button id="commentpost-btn" type="button" class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
         </div>
       </div>
@@ -323,13 +324,6 @@
         }
         ]
       },
-      content: {
-        identifier: 'nickname',
-        rules: [{
-          type: 'empty',
-          prompt: '请输入您的昵称'
-        }]
-      },
     }
   });
 
@@ -366,7 +360,6 @@
     });
 
     function clearContent() {
-      $("[name='nickname']").val('');
       $("[name='content']").val('');
       $("[name='parentId']").val(-1);
       $("[name='content']").attr("placeholder", "请输入评论信息...");

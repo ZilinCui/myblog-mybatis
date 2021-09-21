@@ -24,11 +24,11 @@
                   <div class="ui inline dropdown">
                     <div class="text">
                       <img class="ui avatar image" src="https://unsplash.it/100/100?image=100">
-                      崔子霖
+                      <span th:text="${session.get('user').nickname}"></span>
                     </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                      <a href="#" class="item">注销</a>
+                      <a href="#" class="item" th:href="@{/admin/logout}">注销</a>
                     </div>
                   </div>
                 </span>
@@ -48,10 +48,12 @@
             </div>
             <div class="ui segment m-opacity-big m-margin-vertical-medium" align="center">
                 <div class="m-margin-top-large" align="center">
-                    <img class="ui circular image" align="center" src="https://unsplash.it/100/100?image=852"  style="width: 150px;height: 150px;">
+                    <img class="ui circular image" align="center" th:src="@{${session.get('user').avatar}}"  style="width: 150px;height: 150px;">
                 </div>
-                <div class="m-margin-top-small" style="font-size: x-large;font-family: STSong" align="center">BlackSky</div>
-
+                <div class="m-margin-top-small" style="font-size: x-large;font-family: STSong" align="center">
+                    <span th:text="${session.get('user').nickname}"></span>
+                </div>
+                <a href="#"><h5 class="ui center orange aligned header m-margin-top">出现问题请联系管理员</h5></a>
                 <div class="m-margin-top" align="center">
                     <a href="#" class="ui tencent circular icon button"><i class="user icon"></i></a>
                     <a href="#" class="ui wechat circular icon button"><i class="weixin icon"></i></a>

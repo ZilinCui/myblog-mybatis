@@ -26,6 +26,16 @@ public class BlogService {
     @Autowired
     private UserMapper userMapper;
 
+    //后台登录获取每一个用户的博客
+    public List<Blog> getUserBlogs(Integer userId){
+        List<Blog> blogList = blogMapper.getUserBlogs(userId);
+        for(Blog blog : blogList){
+            blog.setType(typeMapper.getTypeById(blog.getTypeId()));
+            blog.setUser(userMapper.getUserById(blog.getUserId()));
+        }
+        return blogList;
+    }
+
     public List<Blog> getBlogList(){
         List<Blog> blogList = blogMapper.getBlogList();
         for(Blog blog : blogList){
@@ -69,6 +79,16 @@ public class BlogService {
     //设置推荐为true
     public int setRecommended(Integer id){
         return blogMapper.setRecommended(id, blogMapper.getBlogById(id).getIsRecommended() ? 0 : 1);
+    }
+
+    //后台动态查询博客
+    public List<Blog> getBlogListByTypeIdAndTitleAndUser(Integer typeId, String title, Integer userId){
+        //设置blog的Type
+        List<Blog> blogList = blogMapper.getBlogListByIdAndTitleAndUser(typeId, title, userId);
+        for(Blog blog : blogList){
+            blog.setType(typeMapper.getTypeById(blog.getTypeId()));
+        }
+        return blogList;
     }
 
     //动态查询博客

@@ -25,11 +25,11 @@
                   <div class="ui inline dropdown">
                     <div class="text">
                       <img class="ui avatar image" src="https://unsplash.it/100/100?image=100">
-                      崔子霖
+                      <span th:text="${session.get('user').nickname}"></span>
                     </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                      <a href="#" class="item">注销</a>
+                      <a href="#" class="item" th:href="@{/admin/logout}">注销</a>
                     </div>
                   </div>
                 </span>
@@ -69,16 +69,18 @@
             </div>
             <div class="field">
                 <div class="ui left labeled action input">
-                    <label class="ui compact orange basic label">图片地址</label>
-                    <input type="text" placeholder="请输入首图地址" name="photo" th:value="*{photo}">
+                    <label class="ui compact orange basic label">首图地址</label>
+                    <input type="text" class="ui inverted" disabled="disabled" placeholder="由于资源短缺，首图地址自动帮您生成, 不可修改" th:value="*{photo}">
+                    <input type="hidden" name="photo" th:value="*{photo}">
                 </div>
             </div>
         </div>
         <div class="field">
-            <textarea name="description" th:text="*{description}" placeholder="请输入博客描述" id="" cols="30" rows="10"></textarea>
+            <textarea name="description" th:text="*{description}" placeholder="请输入博客描述（字数在100-150之间）" id="" cols="30" rows="10"></textarea>
         </div>
 
         <div class="ui error message"></div>
+        <div class="ui red message hidden"></div>
         <div class="ui right aligned container">
             <button type="button" class="ui button" onclick="window.history.go(-1)" >返回</button>
             <button type="button" id="save-btn" class="ui secondary button">保存</button>
@@ -153,9 +155,23 @@
     })
 
     $("#publish-btn").click(function (){
+        isSufficient();
         $('[name = isPublished]').val(true);
-        $('#blog-form').submit();
+        if(isSufficient()){
+            $('#blog-form').submit();
+        }
     })
+
+    //判断简介字数是否充足
+    function isSufficient(){
+        let count = $("[name=description]").val().length;
+        if(count <= 100 || count >= 150){
+            $(".red.message").text("博客简介字数需要在100-150字之间");
+            $(".red.message").show();
+            return false;
+        }
+        return true;
+    }
 
 
 

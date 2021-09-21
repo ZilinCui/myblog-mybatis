@@ -3,12 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.cuizilin.blog.dao.BlogMapper">
+    <select id="getUserBlogs" resultType="Blog">
+        select * from t_blog  where user_id = #{userId} order by update_time desc
+    </select>
+
     <select id="getBlogList" resultType="Blog">
-        select * from t_blog
+        select * from t_blog where is_published = 1 order by update_time desc
     </select>
 
     <select id="getBlogById" resultType="Blog">
         select * from t_blog where id = #{id}
+    </select>
+
+    <select id="getBlogListByIdAndTitleAndUser" resultType="Blog">
+        select * from t_blog
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="title != null">
+                and title like '%${title}%'
+            </if>
+            <if test="typeId != null">
+                and type_id = #{typeId}
+            </if>
+        </where>
     </select>
 
     <select id="getBlogListByIdAndTitle" resultType="Blog">
@@ -48,8 +67,8 @@
     <!--update Blog-->
     <update id="updateBlog" parameterType="Blog">
         update t_blog set title = #{title}, content = #{content}, photo = #{photo},
-            update_time = #{updateTime}, description = #{description}, type_id = #{typeId}, is_published = #{isPublished}
-            where id = #{id}
+            update_time = #{updateTime}, description = #{description}, type_id = #{typeId}, is_published = #{isPublished},
+            photo = #{photo} where id = #{id}
     </update>
 
 

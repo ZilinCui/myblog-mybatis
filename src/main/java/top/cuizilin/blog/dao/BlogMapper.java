@@ -9,6 +9,8 @@ import java.util.List;
 
 @Repository
 public interface BlogMapper {
+    List<Blog> getUserBlogs(Integer id);
+
     List<Blog> getBlogList();
 
     int addBlog(Blog blog);
@@ -23,6 +25,9 @@ public interface BlogMapper {
 
     //根据title和typeId查询blog
     List<Blog> getBlogListByIdAndTitle(Integer typeId, String title);
+
+    //后台根据用户信息动态查询博客
+    List<Blog> getBlogListByIdAndTitleAndUser(Integer typeId, String title, Integer userId);
 
 
     //观看数加1

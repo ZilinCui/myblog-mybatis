@@ -14,6 +14,7 @@ import top.cuizilin.blog.pojo.Blog;
 import top.cuizilin.blog.pojo.Comment;
 import top.cuizilin.blog.service.CommentService;
 import top.cuizilin.blog.utils.MarkDownUtils;
+import top.cuizilin.blog.utils.PhotoUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -31,7 +32,12 @@ class BlogApplicationTests {
     @Autowired
     private InformationMapper informationMapper;
 
-
+    @Test
+    public void test5(){
+        for(int i = 0; i < 10;i++){
+            System.out.println(PhotoUtils.createNewPhoto());
+        }
+    }
     @Test
     public void test3(){
         System.out.println(informationMapper.getBlogCount());

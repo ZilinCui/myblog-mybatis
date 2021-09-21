@@ -15,6 +15,7 @@ import top.cuizilin.blog.pojo.Type;
 import top.cuizilin.blog.pojo.User;
 import top.cuizilin.blog.service.BlogService;
 import top.cuizilin.blog.service.TypeService;
+import top.cuizilin.blog.utils.PhotoUtils;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -30,9 +31,13 @@ public class BlogController {
     private TypeService typeService;
 
     @GetMapping("/blogs")
-    public String blogs(@RequestParam(required = false, defaultValue = "1", value = "pageNo") Integer pageNo, Model model){
+    public String blogs(@RequestParam(required = false, defaultValue = "1", value = "pageNo") Integer pageNo,
+                        Model model, HttpSession session){
+        User user = (User)session.getAttribute("user");
+        Integer id = null;
+        if(user != null){ id = user.getId(); }
         PageHelper.startPage(pageNo, 5);
-        model.addAttribute("pageInfo", new PageInfo<Blog>(blogService.getBlogList()));
+        model.addAttribute("pageInfo", new PageInfo<Blog>(blogService.getUserBlogs(id)));
         model.addAttribute("typeList", typeService.getTypeList());
         model.addAttribute("flag", "show");
         return "admin/blogs";
@@ -52,6 +57,7 @@ public class BlogController {
         //如果没有对应的blog,则新增
         if(id == null){
             //拿到userId,去service层添加其他字段
+            blog.setPhoto(PhotoUtils.createNewPhoto());
             User user = (User)session.getAttribute("user");
             blog.setUserId(user.getId());
             blogService.addBlog(blog);
@@ -70,7 +76,7 @@ public class BlogController {
         List<Type> typeList = typeService.getTypeList();
         model.addAttribute("typeList", typeList);
         model.addAttribute("blog", blog);
-        return "admin/blog-input";
+            return "admin/blog-input";
     }
 
     //根据id删除博客
@@ -88,10 +94,13 @@ public class BlogController {
 
     //根据标题和分类搜索博客
     @PostMapping("/blogs/search")
-    public String search(@RequestParam(required = false, defaultValue = "1", value = "pageNo") Integer pageNo, Integer typeId, String title, Model model){
-        System.out.println(typeId);
+    public String search(@RequestParam(required = false, defaultValue = "1", value = "pageNo") Integer pageNo,
+                         Integer typeId, String title, Model model, HttpSession session){
+        User user = (User)session.getAttribute("user");
+        Integer id = null;
+        if(user != null) id = user.getId();
         PageHelper.startPage(pageNo, 8);
-        model.addAttribute("pageInfo", new PageInfo<Blog>(blogService.getBlogListByTypeIdAndTitle(typeId, title)));
+        model.addAttribute("pageInfo", new PageInfo<Blog>(blogService.getBlogListByTypeIdAndTitleAndUser(typeId, title, id)));
         model.addAttribute("typeList", typeService.getTypeList());
         model.addAttribute("flag", null);
         return "admin/blogs :: blogList";
